@@ -9,7 +9,7 @@ interface FeaturedArtistsProps {
 }
 
 export const FeaturedArtists: React.FC<FeaturedArtistsProps> = props => {
-  const { featuredArtists, breakpointSize, hasMultipleArtists } = props
+  const { featuredArtists = [], breakpointSize, hasMultipleArtists } = props
   const artistCount = getArtistCountAtBreakpoint(breakpointSize)
   const remainingCount = featuredArtists.length - artistCount
   const truncatedArtists = featuredArtists.slice(0, artistCount)

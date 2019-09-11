@@ -66,7 +66,7 @@ export const getFeaturedArtists = (
 ) => {
   let featuredArtists
 
-  if (collection.query.artist_ids.length > 0) {
+  if ((collection.query.artist_ids || []).length > 0) {
     featuredArtists = filter(merchandisableArtists, artist =>
       collection.query.artist_ids.includes(artist._id)
     )
@@ -74,7 +74,7 @@ export const getFeaturedArtists = (
     return featuredArtistsEntityCollection(featuredArtists, mediator, user)
   }
 
-  if (merchandisableArtists.length > 0) {
+  if ((merchandisableArtists || []).length > 0) {
     return featuredArtistsEntityCollection(
       take(merchandisableArtists, artistsCount),
       mediator,
