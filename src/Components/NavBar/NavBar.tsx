@@ -110,8 +110,6 @@ export const NavBar: React.FC = track(
             </NavItem>
           </NavSection>
 
-          <Spacer mr={2} />
-
           <NavSection>
             {isLoggedIn && (
               <>
@@ -167,6 +165,7 @@ export const NavBar: React.FC = track(
           {!isLoggedIn && (
             <NavSection>
               <Button
+                mx={1}
                 variant="secondaryOutline"
                 onClick={() => {
                   trackEvent({
@@ -179,8 +178,8 @@ export const NavBar: React.FC = track(
               >
                 Log in
               </Button>
-              <Spacer mr={1} />
               <Button
+                mx={1}
                 onClick={() => {
                   trackEvent({
                     action_type: AnalyticsSchema.ActionType.Click,
@@ -251,6 +250,10 @@ const NavBarContainer = styled(Flex)`
   position: relative;
   z-index: 3;
   height: ${NavBarHeight}px;
+
+  * {
+    outline: solid 1px red;
+  }
 `
 
 // FIXME: This needs to be cleaned up once we get proper icons
