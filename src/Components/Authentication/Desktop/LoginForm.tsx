@@ -53,6 +53,9 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
           const globalError =
             this.state.error || (status && !status.success && status.error)
 
+          const isMissingTwoFactorCode =
+            globalError === "missing two-factor authentication code"
+
           const handleChange = e => {
             setStatus(null)
             this.setState({ error: null })
@@ -83,13 +86,28 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+              {(isMissingTwoFactorCode || true) && ( // TODO: remove true
+                <QuickInput
+                  block
+                  error={touched.otp_attempt && errors.otp_attempt}
+                  placeholder="Enter the 6-digit code"
+                  name="otp_attempt"
+                  label="Authenticator code"
+                  type="otp_attempt"
+                  value={values.otp_attempt}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              )}
               <Flex alignItems="center" justifyContent="flex-end">
                 <ForgotPassword
                   onClick={() => this.props.handleTypeChange(ModalType.forgot)}
                 />
               </Flex>
-              {globalError && <Error show>{globalError}</Error>}
               <SubmitButton loading={isSubmitting}>Log in</SubmitButton>
+              {globalError && !isMissingTwoFactorCode && (
+                <Error show>{globalError}</Error>
+              )}
               <Footer
                 handleTypeChange={() =>
                   this.props.handleTypeChange(ModalType.signup)
